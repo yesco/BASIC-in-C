@@ -1,0 +1,104 @@
+// BASIC in C (<) 2024 Jonas S Karlsson
+#include <stdlib.h>
+#include <unistd.h>
+
+void foo() { fflush(stdout); usleep(70); }
+void let(int x) { } void lets(char* x) { }
+int A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
+char *A$,*B$,*C$,*D$,*E$,*F$,*G$,*H$,*I$,*J$,*K$,*L$,*M$,*N$,*O$,*P$,*Q$,*R$,*S$,*T$,*U$,*V$,*W$,*X$,*Y$,*Z$;
+
+void reset() {
+  A=B=C=D=E=F=G=H=I=J=K=L=M=N=O=P=Q=R=S=T=U=V=W=X=Y=Z=0; A=0;
+  A$=B$=C$=D$=E$=F$=G$=H$=I$=J$=K$=L$=M$=N$=O$=P$=Q$=R$=S$=T$=U$=V$=W$=X$=Y$=Z$="";
+}
+
+char* LEFT$(char* s, int n) { return strndup(s, n); }
+char* RIGHT$(char* s, int n) { int len=strlen(s), i=len-n; return strdup(s+(i>0?i:0)); }
+char* MID$(char* s, int i, int n) { int len=strlen(s); if(i>=len) i=len; return strndup(s+i,n); }
+
+#define BASIC int main(int go,char**X) { if (!go) goto lastline; switch(go) { ln0: case 0: foo(
+
+#define line(N) ln##N: case N: foo(
+#define L(N) ); line(N) 
+
+#define REM(...)
+#define GOTO(N) ); goto ln##N; foo(
+#define END ); exit(0
+
+#define GOSUB(N) ); main(N,0
+#define RETURN ); return 0; foo(
+#define CLEAR ); reset(
+#define RUNN(N) END ); } lastline: reset( GOTO(N) ); }
+#define RUN END ); } lastline: reset( GOTO(0) ); }
+
+#define PRINT    ); printf("%s",
+#define PRINTV   ); printf("%d",
+#define PRINTS   ); printf("%s",
+#define PRINTLN  ); printf("%s\n",
+#define PRINTLNV ); printf("%d\n",
+#define PRINTLNS ); printf("%s\n",
+
+#define LET ); let(
+#define LETS ); lets(
+#define IF ); if(
+#define THEN ) { foo(
+#define ELSE ); } else { foo(
+#define FI ); } foo(
+
+#define LOOPN 10
+int loopn= 0, *lop, *loop[LOOPN]={0};
+
+#define FOR(V) ); for(lop= loop[loopn]=&V, V
+#define TO ; ++loopn,*lop<=
+#define STEP ; (*lop)+=
+#define ROF ) { foo(
+#define NEXT ); lop= loop[--loopn]; } --loopn; foo(
+
+#define REPEAT ); do { foo(
+#define UNTIL ); } while(!(
+#define TAEPER )); foo(
+
+#define MOD %
+#define AND &&
+#define OR ||
+#define NOT !
+
+BASIC
+ L(10) REM( *** SINUSY *** )
+ L(20) FOR(I)=0 TO 300 STEP 1 ROF
+ L(21)   GOSUB(400)
+ L(30)   IF I MOD 2==1 THEN PRINT "*" ELSE PRINT "!" FI
+ L(40)   PRINT "HELLO"
+ L(50)   FOR(J)=0 TO I STEP 1 ROF
+ L(60)     PRINT " "
+ L(70)   NEXT
+ L(80) NEXT
+ L(90) GOTO(10)
+L(100) REM( *** MANY STARS *** )
+L(110) REPEAT
+L(120)    PRINT "*"
+L(130) UNTIL A==1 TAEPER
+L(140) END
+L(200) REM( *** SETTIN VARS/CLEARING *** )
+L(210) LET A=3
+L(220) PRINTV A
+L(230) LET A=7
+L(240) PRINTV A
+L(250) CLEAR
+L(260) PRINTV A
+L(270) END
+L(300) REM( *** STRINGS *** )
+L(310) LETS A$="FOOBAR"
+L(320) PRINTS A$
+L(330) PRINTS RIGHT$(A$,3)
+L(340) PRINTS RIGHT$(A$,3)
+L(350) PRINTS LEFT$(A$,3)
+L(360) PRINTS MID$(A$,1,2)
+L(370) END
+L(400) REM( *** SUBROUTINE *** )
+L(410) PRINT "-"
+L(420) RETURN
+L(500) REM( *** MORE ... *** )
+L(999) END
+//RUNN(300)
+RUN
